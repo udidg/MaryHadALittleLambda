@@ -87,18 +87,34 @@ public abstract class MapObject extends SpriteView {
         }
         @Override
         public void visit(Shepherd s) {
+
+
+            long foxCount = s.getAnimals().stream().filter(sp->sp.getClass()==Fox.class).count();
+            if (foxCount==0){
+                SpriteView tail = s.getAnimals().isEmpty() ?
+                        s : s.getAnimals().get(s.getAnimals().size() - 1);
+
+
+                Fox fox = new Fox(tail);
+                s.getAnimals().add(fox);
+
+            }
+
+
+
             // single map:
 //            s.getAnimals().setAll(s.getAnimals()
 //                .stream()
 //                .map(sv -> new Eggs(sv.getFollowing())
 //            ).collect(Collectors.toList()));
             // or a double map:
-            s.getAnimals().setAll(s.getAnimals()
-                .stream().parallel()
-                .map(SpriteView::getFollowing)
-                .map(Eggs::new)
-                .collect(Collectors.toList())
-            );
+
+//            s.getAnimals().setAll(s.getAnimals()
+//                .stream().parallel()
+//                .map(SpriteView::getFollowing)
+//                .map(Eggs::new)
+//                .collect(Collectors.toList())
+//            );
         }
     }
 
@@ -118,25 +134,25 @@ public abstract class MapObject extends SpriteView {
         }
     }
 
-    public static class Fox extends MapObject {
-        // Image by PinedaVX: http://www.rpgmakervx.net/index.php?showtopic=9422
-        static final Image FOX = loadImage("images/fox.png");
-        public  Fox(Main.Location loc) {
-            super(FOX, loc);
-            startAnimation();
-        }
-        @Override
-        public void visit(Shepherd shepherd) {
-            Double mealSize = shepherd.getAnimals()
-                .stream()
-                .map(SpriteView::getScaleX)
-                .reduce(0.0, Double::sum);
-
-            setScaleX(getScaleX() + mealSize * .2);
-            setScaleY(getScaleY() + mealSize * .2);
-            shepherd.getAnimals().clear();
-        }
-    }
+//    public static class Fox extends MapObject {
+//        // Image by PinedaVX: http://www.rpgmakervx.net/index.php?showtopic=9422
+//        static final Image FOX = loadImage("images/fox.png");
+//        public  Fox(Main.Location loc) {
+//            super(FOX, loc);
+//            startAnimation();
+//        }
+//        @Override
+//        public void visit(Shepherd shepherd) {
+//            Double mealSize = shepherd.getAnimals()
+//                .stream()
+//                .map(SpriteView::getScaleX)
+//                .reduce(0.0, Double::sum);
+//
+//            setScaleX(getScaleX() + mealSize * .2);
+//            setScaleY(getScaleY() + mealSize * .2);
+//            shepherd.getAnimals().clear();
+//        }
+//    }
 
     public MapObject(Image spriteSheet, Main.Location loc) {
         super(spriteSheet, loc);

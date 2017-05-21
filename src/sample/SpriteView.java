@@ -31,7 +31,12 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toList;
 
 public class SpriteView extends StackPane {
     private final ImageView imageView;
@@ -85,13 +90,89 @@ public class SpriteView extends StackPane {
         public void move(Main.Direction direction) {
             if (walking != null && walking.getStatus().equals(Animation.Status.RUNNING))
                 return;
+            Main.Location newLocation = location.getValue();
+            newLocation= newLocation.offset(direction.getXOffset(),direction.getYOffset());
+            if (newLocation.cell_x >= Main.HORIZONTAL_CELLS ||
+                    newLocation.cell_y >= Main.VERTICAL_CELLS ||
+                    newLocation.cell_x < 0 ||
+                    newLocation.cell_y < 0 ){
+                System.out.println("Illegal move" + location);
+                return;
+
+            }
+
             moveTo(location.getValue().offset(direction.getXOffset(), direction.getYOffset()));
             animals.stream().reduce(location.get(),
                 (loc, sprt) -> {
                     sprt.moveTo(loc);
                     return sprt.location.get();
                 }, (loc1, loc2) -> loc1);
+
+            List <SpriteView> foxes = animals.stream()
+                    .filter(s->s.getClass()==Fox.class).collect(Collectors.toList());
+            foxes.forEach(f-> {
+                ((Fox)f).eat(this);
+            });
         }
+    }
+
+    public static class Fox extends SpriteView {
+        // Image by Terra-chan: http://www.rpgmakervx.net/index.php?showtopic=29404
+        static final Image FOX = loadImage("images/fox.png");
+        private ChangeListener<Main.Direction> directionListener = (ov, o, o2) -> {
+            switch (o2) {
+                case RIGHT:
+
+
+                    break;
+                case LEFT:
+
+
+                    break;
+                case UP:
+
+
+                    break;
+                case DOWN:
+
+
+                    break;
+            }
+        };
+
+        public void eat (Shepherd s){
+
+            Predicate<SpriteView> spToremove =
+                    a->a.getLocation().cell_x==this.location.getValue().cell_x
+                            && a.getLocation().cell_y==this.location.getValue().cell_y
+                    && a.getClass()!=Fox.class;
+
+
+
+            long scale = s.getAnimals().stream().filter(spToremove).count();
+
+            this.setScaleX(this.getScaleX() + scale);
+            this.setScaleY(this.getScaleY()+ scale);
+
+
+
+            s.getAnimals().removeIf(spToremove);
+        }
+
+        public Fox(SpriteView following) {
+
+            super(FOX, following);
+
+            direction.addListener(directionListener);
+            directionListener.changed(direction, direction.getValue(), direction.getValue());
+        }
+        @Override
+        public void moveTo(Main.Location loc) {
+            //TODO redundent
+            super.moveTo(loc);
+
+        }
+
     }
 
     public static class Lamb extends NumberedSpriteView {

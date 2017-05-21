@@ -44,11 +44,11 @@ public class Main extends Application {
         // And this one FlatMap:
         root.getChildren().add(new MapObject.Nest(new Location(3, 4)));
         // And finally aggregation:
-        MapObject.Fox fox = new MapObject.Fox(new Location(7, 4));
-        fox.setDirection(Direction.LEFT);
-        fox.setScaleX(.5);
-        fox.setScaleY(.5);
-        root.getChildren().add(fox);
+//        MapObject.Fox fox = new MapObject.Fox(new Location(7, 4));
+//        fox.setDirection(Direction.LEFT);
+//        fox.setScaleX(.5);
+//        fox.setScaleY(.5);
+//        root.getChildren().add(fox);
 
         SpriteView.Mary mary = new SpriteView.Mary(new Location(0, 3));
         populateCells(root, mary);
