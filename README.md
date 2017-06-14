@@ -1,7 +1,3 @@
----
-layout: default
----
-
 MaryHadALittleLambda
 ====================
 See [<i class="icon-upload"></i> Github page here](https://udidg.github.io/MaryHadALittleLambda/) 
