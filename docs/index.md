@@ -47,6 +47,6 @@ Edit the code so that in case the Fox catches a Lamb (they both step on the same
 If the Fox eats another Lamb it becomes even Fatter!
 
 
+### <i class="icon-file"></i> Acknoledgement
 
-
-> **Acknoledgement:** Mary Had a Little Lambda is a sample project to demonstrate lambda features using JavaFX and the very finest retro 8-bit graphics. The game was developed by steveonjava. The original game can be found [<i class="icon-upload"></i> here](https://github.com/steveonjava/MaryHadALittleLambda)
+> Mary Had a Little Lambda is a sample project to demonstrate lambda features using JavaFX and the very finest retro 8-bit graphics. The game was developed by steveonjava. The original game can be found [<i class="icon-upload"></i> here](https://github.com/steveonjava/MaryHadALittleLambda)
